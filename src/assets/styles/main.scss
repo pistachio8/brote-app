@@ -1,0 +1,143 @@
+@import "reset.scss";
+@import "base.scss";
+@import "mixins.scss";
+
+/*
+  Icons
+*/
+
+.loading-icon {
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+}
+.loading-icon:after {
+  content: " ";
+  display: block;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border-radius: 50%;
+  border: 6px solid #fff;
+  border-color: lighten($main-font-color, 30%) transparent
+    lighten($main-font-color, 30%) transparent;
+  animation: loading-icon 1.2s linear infinite;
+}
+@keyframes loading-icon {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-container {
+  @include flexLayout(center);
+  width: 100%;
+  height: 100%;
+  padding: 1rem 0;
+}
+
+#app {
+  @include flexLayout(space-between, stretch, column);
+  height: 100%;
+}
+header {
+  position: fixed;
+  width: 100%;
+  background: #fff;
+  box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.05);
+  z-index: 1000;
+}
+footer {
+  width: 100%;
+  padding: 30px;
+  color: #fff;
+  background: darken($color: $main-font-color, $amount: 50%);
+}
+nav {
+  width: 100%;
+  height: 60px;
+  .container {
+    @include flexLayout(space-between, center);
+    width: 100%;
+    height: 100%;
+    padding: 0 1rem;
+    .nav-logo {
+      font: {
+        size: 1.3rem;
+        weight: 700;
+      }
+    }
+    ul {
+      @include flexLayout(center);
+      li {
+        margin: 0 0.6rem;
+      }
+    }
+  }
+  .button-signup {
+    border: 1px solid $point-color;
+    border-radius: 6px;
+    color: $point-color;
+    padding: 10px 20px;
+  }
+}
+
+main {
+  flex: 1;
+}
+
+.home {
+  height: 100%;
+  padding-top: 64px;
+}
+
+.banner {
+  @include flexLayout(center, center, column);
+  min-height: 150px;
+  padding: 1.5rem 0;
+  h3 {
+    font: {
+      size: 2rem;
+      weight: 900;
+    }
+    text-align: center;
+    padding: 2rem 0;
+  }
+}
+.article-list {
+  padding: 0 0.5rem;
+}
+.article-preview {
+  padding: 1rem 1.2rem;
+  border-bottom: 1px solid #ddd;
+
+  &:nth-child(2) {
+    border-top: 1px solid #ddd;
+  }
+
+  .article-meta {
+    p {
+      margin-bottom: 10px;
+      font: {
+        size: 1rem;
+        weight: 500;
+      }
+    }
+  }
+
+  .preview-container {
+    margin: 20px 0;
+    h4 {
+      font: {
+        size: 1.3rem;
+        weight: 700;
+      }
+    }
+    .preview__description {
+      padding: 1em 0;
+    }
+  }
+}
