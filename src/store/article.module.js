@@ -1,6 +1,7 @@
 import { FETCH_ARTICLES } from "./actions.type";
 import { FETCH_START, FETCH_END } from "./mutations.type";
 import { apiService } from "@/common/api";
+import { ARTICLE_LIMIT } from "@/common/config";
 
 export default {
   state: {
@@ -38,7 +39,12 @@ export default {
   actions: {
     async [FETCH_ARTICLES]({ commit }, payload) {
       commit(FETCH_START);
-      await apiService.get("articles", payload).then(response => {
+      const params = {
+        offset: payload,
+        limit: ARTICLE_LIMIT
+      };
+
+      await apiService.get("articles", params).then(response => {
         const articles = response.data.articles;
         commit(FETCH_END, articles);
       });

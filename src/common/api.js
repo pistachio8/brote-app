@@ -1,20 +1,18 @@
 import axios from "axios";
-import { API_URL, ARTICLE_LIMIT } from "./config";
+import { API_URL } from "./config";
 
 export const apiService = {
-  get(resource, query) {
-    return axios
-      .get(`${API_URL}/${resource}`, {
-        params: {
-          offset: query,
-          limit: ARTICLE_LIMIT
-        }
-      })
-      .catch(error => {
-        console.log(error);
-      });
+  setHeader(token) {
+    return (axios.defaults.headers.common["Authorization"] = `Token ${token}`);
   },
-  post() {},
+  get(resource, params = "") {
+    return axios.get(`${API_URL}/${resource}`, params).catch(error => {
+      throw new Error(`[RWV] ApiService ${error}`);
+    });
+  },
+  post(resource, params) {
+    return axios.post(`${API_URL}/${resource}`, params);
+  },
   update() {},
   delete() {}
 };

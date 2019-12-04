@@ -1,5 +1,9 @@
 # brote-app
 
+## API server
+
+using [RealWorld API](https://github.com/gothinkster/realworld/tree/master/api)
+
 ## tools
 
 - vue.js

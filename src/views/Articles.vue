@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="home">
     <h2>Articles</h2>
     <p>id: {{ getArticleId }}</p>
   </div>

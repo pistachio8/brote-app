@@ -5,6 +5,9 @@ Vue.use(VueRouter);
 
 const Home = () => import("@/views/Home.vue");
 const Articles = () => import("@/views/Articles.vue");
+const Editor = () => import("@/views/ArticleEditor.vue");
+const Profile = () => import("@/views/Profile.vue");
+const Settings = () => import("@/views/Settings.vue");
 
 const routes = [
   {
@@ -13,10 +16,24 @@ const routes = [
     component: Home
   },
   {
-    // path: "/articles/:id"
     path: "/articles/:id",
     name: "articles",
     component: Articles
+  },
+  {
+    path: "/editor",
+    name: "editor",
+    component: Editor
+  },
+  {
+    path: "/profile/:id",
+    name: "profile",
+    component: Profile
+  },
+  {
+    path: "/settings",
+    name: "settings",
+    component: Settings
   },
   {
     path: "/*",
