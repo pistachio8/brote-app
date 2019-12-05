@@ -138,11 +138,34 @@ main {
   }
 
   .article-meta {
-    p {
-      margin-bottom: 10px;
+    @include flexLayout(flex-start);
+    .profile-image {
+      position: relative;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin-right: 8px;
+      img {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        height: auto;
+      }
+    }
+    .info {
       font: {
         size: 1rem;
         weight: 500;
+      }
+      a {
+        margin-bottom: 5px;
+      }
+      small {
+        font-size: 0.9rem;
+        color: lighten($color: $main-font-color, $amount: 50);
       }
     }
   }

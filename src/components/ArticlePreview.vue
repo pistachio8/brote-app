@@ -1,8 +1,13 @@
 <template>
   <div class="article-preview">
     <div class="article-meta">
-      <p class="article__author">{{ article.author.username }}</p>
-      <small>{{ dateFormat }}</small>
+      <router-link :to="profileLink" class="profile-image">
+        <img :src="article.author.image" alt="author image" />
+      </router-link>
+      <div class="info">
+        <router-link :to="profileLink" class="article__author">{{ article.author.username }}</router-link>
+        <small>{{ dateFormat }}</small>
+      </div>
     </div>
     <router-link :to="articleLink">
       <div class="preview-container">
@@ -26,6 +31,14 @@ export default {
         name: "articles",
         params: {
           id: this.article.slug
+        }
+      };
+    },
+    profileLink() {
+      return {
+        name: "profile",
+        params: {
+          id: this.article.author.username
         }
       };
     },
