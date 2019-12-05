@@ -1,10 +1,5 @@
 <template>
   <section class="article-list">
-    <div class="banner">
-      <h3>Make progressive Brote with</h3>
-      <img src="@/assets/images/logo.png" alt srcset />
-    </div>
-    <!-- <modal v-if="showModal" /> -->
     <ArticlePreview v-for="(article, index) in articles" :article="article" :key="index"></ArticlePreview>
     <div v-if="isLoading" class="loading-container">
       <div class="loading-icon"></div>
@@ -13,7 +8,6 @@
 </template>
 <script>
 import ArticlePreview from "@/components/ArticlePreview";
-// import modal from "@/components/Modal";
 
 import * as actions from "@/store/actions.type";
 import { mapGetters } from "vuex";
