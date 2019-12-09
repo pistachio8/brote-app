@@ -4,20 +4,23 @@ import {
   SET_AUTH,
   PURGE_AUTH,
   SET_ERRORS,
-  RESET_ERRORS
+  RESET_ERRORS,
+  SET_PROFILE
 } from "./mutations.type";
 import {
   LOGIN,
   LOGOUT,
   REGISTER,
   CHECK_AUTH,
-  REFRESH_FORM
+  REFRESH_FORM,
+  FETCH_PROFILE
 } from "./actions.type";
 
 export default {
   state: {
     isAuth: false,
     user: {},
+    profile: {},
     errors: null
   },
   getters: {
@@ -29,6 +32,9 @@ export default {
     },
     errors(state) {
       return state.errors;
+    },
+    profile(state) {
+      return state.profile;
     }
   },
   mutations: {
@@ -47,6 +53,9 @@ export default {
     },
     [RESET_ERRORS](state) {
       state.errors = null;
+    },
+    [SET_PROFILE](state, profile) {
+      state.profile = profile;
     }
   },
   actions: {
@@ -98,6 +107,19 @@ export default {
     },
     [REFRESH_FORM]({ commit }) {
       commit(RESET_ERRORS);
+    },
+    // profile
+    // GET /api/profiles/:username
+    // resource, query
+    async [FETCH_PROFILE]({ commit }, payload) {
+      await apiService
+        .get("profiles", payload)
+        .then(({ data }) => {
+          commit(SET_PROFILE, data.profile);
+        })
+        .catch(res => {
+          console.log(res);
+        });
     }
   }
 };

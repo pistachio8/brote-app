@@ -26,7 +26,7 @@ const routes = [
     component: Editor
   },
   {
-    path: "/profile/:id",
+    path: "/profile/:username",
     name: "profile",
     component: Profile
   },
