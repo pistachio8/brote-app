@@ -13,6 +13,10 @@ import ArticleList from "@/components/ArticleList";
 import Banner from "@/components/Banner";
 
 export default {
-  components: { ArticleList, Banner }
+  components: { ArticleList, Banner },
+  beforeRouteLeave(to, from, next) {
+    this.$store.state.article.articles = [];
+    next();
+  }
 };
 </script>
