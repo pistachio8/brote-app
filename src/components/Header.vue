@@ -24,13 +24,19 @@
         </ul>
         <ul v-else>
           <li>
-            <router-link class="edit-article" :to="{name: 'editor'}" arial-label="Edit" exact>
+            <router-link
+              class="edit-article"
+              :to="{name: 'editor'}"
+              arial-label="Edit"
+              active-class="active"
+              exact
+            >
               <i class="fas fa-external-link-alt"></i>
               <span class="a11y-hidden">새 글</span>
             </router-link>
           </li>
           <li>
-            <router-link :to="profileLink">{{currentUser.username}} 님</router-link>
+            <router-link :to="profileLink" active-class="active" exact>{{currentUser.username}} 님</router-link>
           </li>
           <li>
             <a role="button" @click="logout">로그아웃</a>
@@ -54,7 +60,7 @@ export default {
       return {
         name: "profile",
         params: {
-          id: this.currentUser.username
+          username: this.currentUser.username
         }
       };
     }

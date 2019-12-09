@@ -1,8 +1,11 @@
 <template>
   <section class="article-list">
-    <ArticlePreview v-for="(article, index) in articles" :article="article" :key="index"></ArticlePreview>
     <div v-if="isLoading" class="loading-container">
       <div class="loading-icon"></div>
+    </div>
+    <div v-else>
+      <div class="empty-content" v-if="articles.length <= 0">작성한 글이 없습니다.</div>
+      <ArticlePreview v-else v-for="(article, index) in articles" :article="article" :key="index"></ArticlePreview>
     </div>
   </section>
 </template>
@@ -11,10 +14,17 @@ import ArticlePreview from "@/components/ArticlePreview";
 
 import * as actions from "@/store/actions.type";
 import { mapGetters } from "vuex";
+import { ARTICLE_LIMIT } from "@/common/config";
 // import { scrollEvent } from "@/common/mixins";
 
 export default {
   components: { ArticlePreview },
+  props: {
+    author: {
+      type: String,
+      required: false
+    }
+  },
   data() {
     return {
       offset: 0
@@ -22,16 +32,29 @@ export default {
   },
   created() {
     window.addEventListener("scroll", this.throttle(this.scrollHandler, 800));
-
-    this.$store.dispatch(actions.FETCH_ARTICLES, this.offset);
+  },
+  mounted() {
+    this.$store.dispatch(actions.FETCH_ARTICLES, this.listConfig);
   },
   computed: {
-    ...mapGetters(["articles", "isLoading", "countOfArticles"])
+    ...mapGetters(["articles", "isLoading", "countOfArticles"]),
+    listConfig() {
+      const filters = {
+        offset: this.offset,
+        limit: ARTICLE_LIMIT
+      };
+      if (this.author) {
+        filters.author = this.author;
+      }
+
+      return filters;
+    }
   },
   methods: {
     fetchArticles() {
       this.offset = this.$store.state.article.countOfArticles;
-      this.$store.dispatch(actions.FETCH_ARTICLES, this.offset);
+
+      this.$store.dispatch(actions.FETCH_ARTICLES, this.listConfig);
     },
     getCurrentScrollPercentage() {
       const list = document.querySelector(".article-list");

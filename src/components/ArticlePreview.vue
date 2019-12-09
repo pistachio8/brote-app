@@ -38,7 +38,7 @@ export default {
       return {
         name: "profile",
         params: {
-          id: this.article.author.username
+          username: this.article.author.username
         }
       };
     },
