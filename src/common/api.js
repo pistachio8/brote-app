@@ -5,8 +5,13 @@ export const apiService = {
   setHeader(token) {
     return (axios.defaults.headers.common["Authorization"] = `Token ${token}`);
   },
-  get(resource, params = "") {
-    return axios.get(`${API_URL}/${resource}`, params).catch(error => {
+  query(resource, params = "") {
+    return axios.get(`${API_URL}/${resource}`, { params }).catch(error => {
+      throw new Error(`[RWV] ApiService ${error}`);
+    });
+  },
+  get(resource, slug = "") {
+    return axios.get(`${API_URL}/${resource}/${slug}`).catch(error => {
       throw new Error(`[RWV] ApiService ${error}`);
     });
   },
