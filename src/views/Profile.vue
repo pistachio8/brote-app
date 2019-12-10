@@ -21,6 +21,7 @@
 <script>
 import Banner from "@/components/Banner";
 import ArticleList from "@/components/ArticleList";
+import store from "@/store";
 
 import { mapGetters } from "vuex";
 import { FETCH_PROFILE } from "@/store/actions.type";
@@ -30,8 +31,12 @@ export default {
     Banner,
     ArticleList
   },
-  created() {
-    this.$store.dispatch(FETCH_PROFILE, this.$route.params.username);
+  beforeRouteEnter(to, from, next) {
+    Promise.all([store.dispatch(FETCH_PROFILE, to.params.username)]).then(
+      () => {
+        next();
+      }
+    );
   },
   computed: {
     ...mapGetters(["profile"]),
