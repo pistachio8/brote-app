@@ -1,4 +1,4 @@
-import { apiService } from "@/common/api";
+import { ApiService } from "@/common/api";
 import { ID_TOKEN_KEY } from "@/common/config";
 import {
   SET_AUTH,
@@ -60,8 +60,7 @@ export default {
   },
   actions: {
     async [LOGIN]({ commit }, payload) {
-      await apiService
-        .post("users/login", { user: payload })
+      await ApiService.post("users/login", { user: payload })
         .then(({ data }) => {
           commit(SET_AUTH, data.user);
           commit(RESET_ERRORS);
@@ -76,8 +75,7 @@ export default {
       localStorage.removeItem(ID_TOKEN_KEY);
     },
     async [REGISTER]({ commit }, payload) {
-      await apiService
-        .post("users", { user: payload })
+      await ApiService.post("users", { user: payload })
         .then(({ data }) => {
           commit(SET_AUTH, data.user);
           commit(RESET_ERRORS);
@@ -91,10 +89,9 @@ export default {
       let token = localStorage.getItem(ID_TOKEN_KEY);
 
       if (token) {
-        apiService.setHeader(token);
+        ApiService.setHeader(token);
 
-        apiService
-          .get("user")
+        ApiService.get("user")
           .then(({ data }) => {
             commit(SET_AUTH, data.user);
           })
@@ -112,8 +109,7 @@ export default {
     // GET /api/profiles/:username
     // resource, query
     async [FETCH_PROFILE]({ commit }, payload) {
-      await apiService
-        .get("profiles", payload)
+      await ApiService.get("profiles", payload)
         .then(({ data }) => {
           commit(SET_PROFILE, data.profile);
         })
