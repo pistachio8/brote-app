@@ -7,6 +7,7 @@ const Home = () => import("@/views/Home.vue");
 const Articles = () => import("@/views/Articles.vue");
 const Editor = () => import("@/views/ArticleEditor.vue");
 const Profile = () => import("@/views/Profile.vue");
+const ProfileArticles = () => import("@/views/ProfileArticles");
 const Settings = () => import("@/views/Settings.vue");
 
 const routes = [
@@ -16,7 +17,7 @@ const routes = [
     component: Home
   },
   {
-    path: "/articles/:id",
+    path: "/articles/:slug",
     name: "articles",
     component: Articles
   },
@@ -27,8 +28,14 @@ const routes = [
   },
   {
     path: "/profile/:username",
-    name: "profile",
-    component: Profile
+    component: Profile,
+    children: [
+      {
+        path: "",
+        name: "profile",
+        component: ProfileArticles
+      }
+    ]
   },
   {
     path: "/settings",
