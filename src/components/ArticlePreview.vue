@@ -5,7 +5,9 @@
         <img :src="article.author.image" alt="author image" />
       </router-link>
       <div class="info">
-        <router-link :to="profileLink" class="article__author">{{ article.author.username }}</router-link>
+        <router-link :to="profileLink" class="article__author">{{
+          article.author.username
+        }}</router-link>
         <small>{{ dateFormat }}</small>
       </div>
     </div>
@@ -30,7 +32,7 @@ export default {
       return {
         name: "articles",
         params: {
-          id: this.article.slug
+          slug: this.article.slug
         }
       };
     },
