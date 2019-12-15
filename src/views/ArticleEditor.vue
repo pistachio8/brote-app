@@ -1,7 +1,12 @@
 <template>
   <div class="editor">
     <div class="editor-container">
-      <form method="POST">
+      <ul class="error-message">
+        <li v-for="(error, key) in errors" :key="key">
+          <i class="fas fa-exclamation-circle"></i> {{ key }} {{ error[0] }}
+        </li>
+      </ul>
+      <form method="POST" @submit.prevent="publish(article.slug)">
         <fieldset>
           <legend class="a11y-hidden">Title</legend>
           <input type="text" v-model="article.title" placeholder="제목" />
@@ -22,7 +27,7 @@
             placeholder="내용을 입력하세요.."
           />
         </fieldset>
-        <button type="submit" @click.prevent="publish(article.slug)">
+        <button type="submit">
           작성하기
         </button>
       </form>
@@ -57,7 +62,7 @@ export default {
       title: null,
       content: null,
       description: null,
-      errors: []
+      errors: {}
     };
   },
   computed: {
@@ -78,8 +83,6 @@ export default {
       this.$store
         .dispatch(action)
         .then(({ data }) => {
-          console.log(data);
-
           this.$router.push({
             name: "articles",
             params: { slug: data.article.slug }
