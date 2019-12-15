@@ -1,6 +1,8 @@
 export const FETCH_START = "setLoading";
 export const FETCH_END = "setArticles";
 export const FETCH_ARTICLE = "setArticle";
+export const RESET_ARTICLE = "resetArticle";
+export const RESET_ARTICLES = "resetArticles";
 export const SET_MODAL_STATE = "setModalState";
 export const SET_MODAL_TYPE = "setModalType";
 export const SET_AUTH = "setUser";

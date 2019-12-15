@@ -1,6 +1,9 @@
 export const FETCH_ARTICLES = "fetchArticles";
 export const FETCH_ARTICLE = "fetchArticle";
 export const CREATE_ARTICLE = "createArticle";
+export const EDIT_ARTICLE = "updateArticle";
+export const CLEAR_ARTICLE = "clearArticle";
+export const CLEAR_ARTICLES = "clearArticles";
 export const UPDATE_MODAL_STATE = "updateModalState";
 export const CHANGE_MODAL_FORM = "updateModalType";
 export const REGISTER = "signup";
