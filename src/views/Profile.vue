@@ -2,8 +2,8 @@
   <div class="profile">
     <Banner>
       <div class="info">
-        <h3>{{profile.username}}</h3>
-        <div v-if="profile.bio !== null" class="profile-bio">{{profile.bio}}</div>
+        <h3>{{ profile.username }}</h3>
+        <div v-if="profile.bio !== null" class="profile-bio">{{ profile.bio }}</div>
         <div v-else class="profile-bio">소개글이 없습니다.</div>
       </div>
       <div class="profile-image">
@@ -13,39 +13,60 @@
       </div>
     </Banner>
     <div class="action-container">
-      <h4 class="tab-title">작성글</h4>
-      <ArticleList :author="getUsername" />
+      <router-link :to="{ name: 'profile'}" exact>
+        <h4 class="tab-title">작성글</h4>
+      </router-link>
+      <router-view />
+      <!-- <h4 class="tab-title">작성글</h4>
+      <ArticleList :author="getUsername" />-->
     </div>
   </div>
 </template>
 <script>
 import Banner from "@/components/Banner";
-import ArticleList from "@/components/ArticleList";
+// import ArticleList from "@/components/ArticleList";
 import store from "@/store";
 
 import { mapGetters } from "vuex";
-import { FETCH_PROFILE } from "@/store/actions.type";
+import {
+  CLEAR_ARTICLES,
+  FETCH_PROFILE
+  // FETCH_ARTICLES
+} from "@/store/actions.type";
 
 export default {
   components: {
-    Banner,
-    ArticleList
+    Banner
   },
   beforeRouteEnter(to, from, next) {
-    Promise.all([store.dispatch(FETCH_PROFILE, to.params.username)]).then(
-      () => {
-        next();
-      }
-    );
+    console.log("before profile");
+
+    Promise.all([
+      store.dispatch(CLEAR_ARTICLES),
+      store.dispatch(FETCH_PROFILE, to.params.username)
+    ]).then(() => {
+      next();
+    });
   },
   computed: {
-    ...mapGetters(["profile"]),
-    getUsername() {
-      return this.$route.params.username;
+    ...mapGetters(["profile", "currentUser"])
+  },
+  methods: {
+    isCurrentUser() {
+      if (this.isCurrentUser && this.profile.username) {
+        return this.isCurrentUser === this.profile.username;
+      }
+      return false;
+    }
+  },
+  watch: {
+    $route(to) {
+      store.dispatch(FETCH_PROFILE, to.params.username);
+      store.dispatch(CLEAR_ARTICLES);
     }
   },
   beforeRouteLeave(to, from, next) {
-    this.$store.state.article.articles = [];
+    store.dispatch(CLEAR_ARTICLES);
     next();
   }
 };
