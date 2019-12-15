@@ -88,10 +88,19 @@ nav {
       @include flexLayout(center, baseline);
       li {
         margin: 0 0.6rem;
+        a {
+          color: lighten($color: $main-font-color, $amount: 60);
+        }
       }
       .edit-article {
         i {
-          color: $main-font-color;
+          color: lighten($color: $main-font-color, $amount: 60);
+        }
+      }
+      .active {
+        color: darken($color: $main-font-color, $amount: 60);
+        i {
+          color: darken($color: $main-font-color, $amount: 60);
         }
       }
     }
@@ -106,11 +115,52 @@ nav {
 
 main {
   flex: 1;
+  padding-top: 64px;
 }
 
 .home {
   height: 100%;
-  padding-top: 64px;
+}
+
+/* Profile */
+
+.profile {
+  .banner {
+    flex-direction: row;
+    width: 90%;
+    margin: 0 auto;
+    .info {
+      flex: 1;
+      h3 {
+        text-align: left;
+      }
+    }
+  }
+  .action-container {
+    width: 90%;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding-top: 3em;
+    .tab-title {
+      font: {
+        size: 1.1rem;
+        weight: 500;
+      }
+      padding: 1rem 1.7rem;
+    }
+  }
+}
+
+.profile-image-wrapper {
+  position: relative;
+  border-radius: 50%;
+  overflow: hidden;
+  img {
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+    vertical-align: middle;
+  }
 }
 
 .banner {
@@ -126,6 +176,14 @@ main {
     padding: 2rem 0;
   }
 }
+
+.empty-content {
+  border-top: 1.5px solid lighten($color: $main-font-color, $amount: 50);
+  text-align: center;
+  padding: 3em 1em;
+}
+
+/* article - list */
 .article-list {
   padding: 0 0.5rem;
 }
@@ -133,8 +191,8 @@ main {
   padding: 1rem 1.2rem;
   border-bottom: 1px solid #ddd;
 
-  &:nth-child(2) {
-    border-top: 1px solid #ddd;
+  &:nth-child(1) {
+    border-top: 1.5px solid lighten($color: $main-font-color, $amount: 50);
   }
 
   .article-meta {
@@ -180,6 +238,56 @@ main {
     }
     .preview__description {
       padding: 1em 0;
+    }
+    h4,
+    .preview__description {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}
+
+/* article - editor */
+.editor-container {
+  width: 90%;
+  margin: 0 auto;
+  form {
+    fieldset {
+      input[type="text"],
+      textarea {
+        width: 100%;
+        border: none;
+        font-size: 1.2rem;
+        padding: 0 1rem;
+      }
+      input[type="text"] {
+        height: 60px;
+      }
+      textarea {
+        min-height: 400px;
+        resize: none;
+      }
+      &:nth-child(2) {
+        margin: 5px 0 20px 0;
+        padding: 1rem 0;
+        border-top: 1.5px solid lighten($color: $main-font-color, $amount: 50);
+      }
+    }
+    button {
+      @include floatLayout(right);
+      display: inline-block;
+      width: 40%;
+      height: 50px;
+      border: none;
+      border-radius: 4px;
+      background: #00a87c;
+      color: #fff;
+      transition: all 0.2s linear;
+      &:active,
+      &:focus,
+      &:hover {
+        background: darken($color: #00a87c, $amount: 10);
+      }
     }
   }
 }

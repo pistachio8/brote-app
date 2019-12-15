@@ -5,6 +5,15 @@
   flex-direction: $direction;
 }
 
+@mixin floatLayout($position: left) {
+  float: $position;
+  &::after {
+    content: "";
+    display: block;
+    clear: both;
+  }
+}
+
 @mixin closeIcon($width: 21px, $height: 21px, $color: #000) {
   color: $color;
   position: absolute;
