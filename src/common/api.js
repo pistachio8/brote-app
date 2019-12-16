@@ -25,7 +25,9 @@ export const ApiService = {
     return axios.put(`${API_URL}/${resource}`, params);
   },
   delete(resource) {
-    return axios.delete(`${API_URL}/${resource}`);
+    return axios.delete(`${API_URL}/${resource}`).catch(error => {
+      throw new Error(`[RWV] ApiService ${error}`);
+    });
   }
 };
 
@@ -33,6 +35,10 @@ export const ArticlesService = {
   create(params) {
     return ApiService.post("articles", { article: params });
   },
-  update() {},
-  delete() {}
+  update(slug, params) {
+    return ApiService.update("articles", slug, { article: params });
+  },
+  delete(slug) {
+    return ApiService.delete(`articles/${slug}`);
+  }
 };

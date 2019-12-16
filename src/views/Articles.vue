@@ -13,6 +13,12 @@
           }}</router-link>
           <small>{{ dateFormat }}</small>
         </div>
+        <div v-if="showControlButton" class="button-container">
+          <router-link class="update" :to="updateLink">
+            수정
+          </router-link>
+          <button class="" @click="removeArticle(article.slug)">삭제</button>
+        </div>
       </div>
     </Banner>
     <div class="article-content">{{ article.body }}</div>
@@ -21,7 +27,7 @@
 <script>
 import Banner from "@/components/Banner";
 import store from "@/store";
-import { FETCH_ARTICLE } from "@/store/actions.type";
+import { FETCH_ARTICLE, DELETE_ARTICLE } from "@/store/actions.type";
 import { mapGetters } from "vuex";
 
 export default {
@@ -32,7 +38,7 @@ export default {
     });
   },
   computed: {
-    ...mapGetters(["article"]),
+    ...mapGetters(["article", "isAuthenticated", "currentUser"]),
     profileLink() {
       return {
         name: "profile",
@@ -43,6 +49,37 @@ export default {
     },
     dateFormat() {
       return this.article.updatedAt.substring(0, 10);
+    },
+    updateLink() {
+      return {
+        name: "editor",
+        params: {
+          slug: this.article.slug
+        }
+      };
+    },
+    showControlButton() {
+      if (
+        this.isAuthenticated &&
+        this.currentUser.username === this.article.author.username
+      ) {
+        return true;
+      }
+      return false;
+    }
+  },
+  methods: {
+    removeArticle(slug) {
+      this.$store
+        .dispatch(DELETE_ARTICLE, slug)
+        .then(() => {
+          this.$router.push({
+            name: "home"
+          });
+        })
+        .catch(response => {
+          console.log(response);
+        });
     }
   }
 };

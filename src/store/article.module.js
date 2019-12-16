@@ -4,7 +4,8 @@ import {
   CREATE_ARTICLE,
   CLEAR_ARTICLES,
   CLEAR_ARTICLE,
-  EDIT_ARTICLE
+  EDIT_ARTICLE,
+  DELETE_ARTICLE
 } from "./actions.type";
 import {
   FETCH_START,
@@ -98,6 +99,10 @@ export default {
     },
     [EDIT_ARTICLE]({ state }) {
       return ArticlesService.update(state.article.slug, state.article);
+    },
+    [DELETE_ARTICLE]({ commit }, slug) {
+      commit(RESET_ARTICLE);
+      return ArticlesService.delete(slug);
     },
     // clear article state
     [CLEAR_ARTICLE]({ commit }) {
